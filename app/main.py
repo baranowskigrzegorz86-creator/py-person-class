@@ -10,17 +10,18 @@ class Person:
 def create_person_list(people):
     Person.people = {}
 
-    result = []
-    for p in people:
-        result.append(Person(p["name"], p["age"]))
+    result = [Person(p["name"], p["age"]) for p in people]
 
     for p in people:
         person = Person.people[p["name"]]
 
-        if "wife" in p and p["wife"] is not None:
-            setattr(person, "wife", Person.people[p["wife"]])
+        wife = p.get("wife")
+        if wife is not None:
+            setattr(person, "wife", Person.people[wife])
 
-        if "husband" in p and p["husband"] is not None:
-            setattr(person, "husband", Person.people[p["husband"]])
+        husband = p.get("husband")
+        if husband is not None:
+            setattr(person, "husband", Person.people[husband])
 
     return result
+
